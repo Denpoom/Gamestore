@@ -1,0 +1,115 @@
+{% extends 'bese.html' %}
+{% block content %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-8 ">
+                <form class="form-inline">
+                    <div class="form-group mx-sm-2 mb-2">
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="col-4 text-right">
+                {% if user.is_authenticated %}
+                <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
+                    Game</a>
+
+                {% endif %}
+            </div>
+        </div>
+
+
+
+
+        <!-- ตรงกลางอันเดียว -->
+        <div class="row bg-warning">
+            <img src="{% static '/img/wallpaper.png' %}" width="1150" height="400" class="d-inline-block align-top" alt="">
+        </div><br>
+        <!-- หมดตรงกลางอันเดียว -->
+        <!--  3 of 3 -->
+        {% for details in game %}
+
+        <div class="container">
+            <div class="row text">
+            {% for img in image %}
+                <div class="col ">
+                    <img class="card shadow p-2 mb-3 ml-4 bg-white rounded " style="width: 10rem; height: 14rem;"
+                        src="{{img.image_url.url}}" alt="">
+                </div>
+                {% endfor %}
+                <div class="col-6 ">
+                    <div class="p-2 mb-3 my-5">
+                    </div>
+                    <div class="p-2 mb-3 my-3">
+                    </div>
+                    <div class=" mb-2 my- mr-5">
+                        <h4>{{details.name}}</h4>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col ">
+                    <div class="p-2 mb-3 my-5">
+                    </div>
+                    <blockquote class=" text-right">
+                        <p class="mb-2">{{details.price}} BAHT</p>
+                    </blockquote>
+                    {% if user.is_authenticated %}
+                    <blockquote class="blockquote text-right">
+                        <a type="button" class="btn btn-outline-dark col-5 ml-3" href="#"
+                            role="button">BUY NOW</a>
+                    </blockquote>
+                    {% endif %}
+                </div>
+            </div><br>
+            <!-- end 3 of 3 -->
+
+            <div class="row ">
+                <div class="col ">
+                    <div class="float-left">
+                        <h4>About this game</h4>
+                    </div><br>
+
+                </div>
+                <div class="col r">
+                    <small class="" style="color: #afafaf">Developer</small>
+                    <p>{{details.developer}}</p><br>
+                    <small class="" style="color: #afafaf">Tags</small>
+                    <p>{{details.game_type_id.type_name}}</p><br>
+                </div>
+                <div class="col ">
+                    <small class="" style="color: #afafaf">Rating</small>
+                    <p>{{details.rating}}</p><br>
+                  
+                </div>
+                <div class="col ">
+                    <small class="" style="color: #afafaf">Release Date</small>
+                    <p>{{details.release_date}}</p>
+                </div>
+            </div>
+            <br>
+            <div class="row ">
+                <div class="">{{details.description}}
+                </div>
+            </div><br><br><br>
+            {% endfor %}
+
+
+</body>
+
+</html>
+
+{% endblock content %}
