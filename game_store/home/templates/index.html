@@ -2,26 +2,49 @@
 {% block content %}
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <br>
     <!-- search -->
+
     <div class="container">
         <div class="row">
             <div class="col-8 ">
-                <form class="form-inline">
+                <form action="{% url 'home' %}" method="POST" class="form-inline">
+                    {% csrf_token %}
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        
+                        <input type="text" class="form-control" name="search" placeholder="Search...">
                     </div>
-                    
 
                 </form>
+
+                <!-- <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-outline-secondary">Type Game</button>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Adventure</a>
+                            <a class="dropdown-item" href="#">Sport</a>
+                            <a class="dropdown-item" href="#">Racing</a>
+
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                </div> -->
+
             </div>
+
+
             <div class="col-4 text-right">
                 {% if user.is_authenticated %}
                 <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
@@ -31,108 +54,104 @@
         </div>
         <!-- content -->
         <div class="container">
-        
+
             <div class="row">
                 <div class="col-10  ">
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">Action</h1>
-                    <a style="text-align: right; width:50%;  display: inline-block;"
-                        href="#">Seemore...</a>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="#">Seemore...</a>
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->
                         {% for game in games|slice:":5" %}
-                            {% for image in images %}
-                                {% if image.game_id_id == game.id %}
-                                    {% if game.game_type_id.type_name == "Action" %}
-                                    <div class="col-sm-2 m-2">
-                                        <div>
-                                            <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
-                                                src="{{ image.image_url.url }}" alt="">
-                                            <a class="ml-" style="color: #000000"
-                                                href="{% url 'details' game.id %}"><b>{{ game.name }} </b></a> <br>
-                                                {% comment %} <p>{{ game.game_id }}</p> {% endcomment %}
-                                            <small class="" style="color: #afafaf">{{ game.developer }}</small>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for image in images %}
+                        {% if image.game_id_id == game.id %}
+                        {% if game.game_type_id.type_name == "Action" %}
+                        <div class="col-sm-2 m-2">
+                            <div>
+                                <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
+                                    src="{{ image.image_url.url }}" alt="">
+                                <a class="ml-" style="color: #000000"
+                                    href="{% url 'details' game.id %}"><b>{{ game.name }} </b></a> <br>
+                                {% comment %} <p>{{ game.game_id }}</p> {% endcomment %}
+                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
                         {% endfor %}
                     </div>
                     <!-- จบแถว -->
 
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">Adventure</h1>
-                    <a style="text-align: right; width:50%;  display: inline-block;"
-                        href="#">Seemore...</a>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="#">Seemore...</a>
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->
                         {% for game in games2|slice:":5" %}
-                            {% for image in images2 %}
-                                {% if image.game_id_id == game.id %}
-                                    {% if game.game_type_id.type_name == "Adventure" %}
-                                    <div class="col-sm-2 m-2">
-                                        <div>
-                                            <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
-                                                src="{{ image.image_url.url }}" alt="">
-                                            <a class="ml-" style="color: #000000"
-                                                href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
-                                            <small class="" style="color: #afafaf">{{ game.developer }}</small>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for image in images2 %}
+                        {% if image.game_id_id == game.id %}
+                        {% if game.game_type_id.type_name == "Adventure" %}
+                        <div class="col-sm-2 m-2">
+                            <div>
+                                <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
+                                    src="{{ image.image_url.url }}" alt="">
+                                <a class="ml-" style="color: #000000"
+                                    href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
+                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
                         {% endfor %}
                     </div>
                     <!-- จบแถว -->
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">Sport</h1>
-                    <a style="text-align: right; width:50%;  display: inline-block;"
-                        href="#">Seemore...</a>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="#">Seemore...</a>
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->
                         {% for game in games3|slice:":5" %}
-                            {% for image in images3 %}
-                                {% if image.game_id_id == game.id %}
-                                    {% if game.game_type_id.type_name == "Sport" %}
-                                    <div class="col-sm-2 m-2">
-                                        <div>
-                                            <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
-                                                src="{{ image.image_url.url }}" alt="">
-                                            <a class="ml-" style="color: #000000"
-                                                href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
-                                            <small class="" style="color: #afafaf">{{ game.developer }}</small>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for image in images3 %}
+                        {% if image.game_id_id == game.id %}
+                        {% if game.game_type_id.type_name == "Sport" %}
+                        <div class="col-sm-2 m-2">
+                            <div>
+                                <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
+                                    src="{{ image.image_url.url }}" alt="">
+                                <a class="ml-" style="color: #000000"
+                                    href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
+                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
                         {% endfor %}
                     </div>
 
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">Racing</h1>
-                    <a style="text-align: right; width:50%;  display: inline-block;"
-                        href="#">Seemore...</a>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="#">Seemore...</a>
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->
                         {% for game in games4|slice:":5" %}
-                            {% for image in images4 %}
-                                {% if image.game_id_id == game.id %}
-                                    {% if game.game_type_id.type_name == "Racing" %}
-                                    <div class="col-sm-2 m-2">
-                                        <div>
-                                            <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
-                                                src="{{ image.image_url.url }}" alt="">
-                                            <a class="ml-" style="color: #000000"
-                                                href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
-                                            <small class="" style="color: #afafaf">{{ game.developer }}</small>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
+                        {% for image in images4 %}
+                        {% if image.game_id_id == game.id %}
+                        {% if game.game_type_id.type_name == "Racing" %}
+                        <div class="col-sm-2 m-2">
+                            <div>
+                                <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
+                                    src="{{ image.image_url.url }}" alt="">
+                                <a class="ml-" style="color: #000000"
+                                    href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
+                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
                         {% endfor %}
                     </div>
                     <!-- จบแถว -->
@@ -144,18 +163,22 @@
                     <p>Filters</p>
                     <hr>
                     <form action="{% url 'allgame' %}" method="POST">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <div class="checkbox">
-                            <label><input type="checkbox" value="Action"  name="type" onchange="this.form.submit()"> Action</label>
+                            <label><input type="checkbox" value="Action" name="type" onchange="this.form.submit()">
+                                Action</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="Adventure" name="type" onchange="this.form.submit()">  Adventure</label>
+                            <label><input type="checkbox" value="Adventure" name="type" onchange="this.form.submit()">
+                                Adventure</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="Sport" name="type" onchange="this.form.submit()"> Sport</label>
+                            <label><input type="checkbox" value="Sport" name="type" onchange="this.form.submit()">
+                                Sport</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="Racing" name="type" onchange="this.form.submit()"> Racing</label>
+                            <label><input type="checkbox" value="Racing" name="type" onchange="this.form.submit()">
+                                Racing</label>
                         </div>
                     </form>
 

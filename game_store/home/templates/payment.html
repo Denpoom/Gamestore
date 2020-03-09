@@ -1,0 +1,288 @@
+{% extends 'member_bese.html' %}
+{% block content %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <br>
+    <div class="container">
+        <div class="row text">
+
+            <div class="col ">
+                <img class="card shadow p-2 mb-3 ml-4 bg-white rounded " style="width: 10rem; height: 14rem;"
+                    src="{{image.image_url.url}}" alt="">
+            </div>
+
+            <div class="col-6 ">
+                <div class="p-2 mb-3 my-5">
+                </div>
+                <div class="p-2 mb-3 my-3">
+                </div>
+                <div class=" mb-2 my- mr-5">
+                    <h4>{{game.name}}</h4>
+                    <hr>
+                </div>
+            </div>
+            <div class="col ">
+                <div class="p-2 mb-3 my-5">
+                </div>
+                <div>
+
+                    <strong>
+                        <h4>Payment</h4>
+                    </strong>
+                    <hr>
+                    <form action="{% url 'payment' game.id %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="cash" name="cash" onchange="this.form.submit()">&nbsp;
+
+                                <img src="{% static '/img/cash.png' %}" width="50" height="50"
+                                    class="d-inline-block align-top" alt="">&nbsp;CASH
+
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="credit" name="credit"
+                                    onchange="this.form.submit()">&nbsp;
+
+                                <img src="{% static '/img/credit.png' %}" width="50" height="50"
+                                    class="d-inline-block align-top" alt="">&nbsp;CREDIT CARD
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Sport" name="type" onchange="this.form.submit()">&nbsp;
+
+                                <img src="{% static '/img/airpay.png' %}" width="50" height="50"
+                                    class="d-inline-block align-top" alt="">&nbsp;AIRPAY
+                            </label>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-10">
+                    {% if cash %}
+                    <div class="row text-center">
+                        <div class="col-12-sm-10">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="">
+                                        <div class="row">
+                                            <div class="">
+                                                <address>
+                                                    <strong>Game Store</strong>
+                                                    <br>
+                                                    <abbr title="Phone">P:</abbr> (090) 2255970
+                                                </address>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <h1>Receipt</h1>
+                                            </div>
+                                            </span>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>#</th>
+                                                        <th class="text-center">Price</th>
+                                                        <th class="text-center">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="col-md-9">
+                                                            <l>{{game.name}}</l>
+                                                            </h4>
+                                                        </td>
+                                                        <td class="col-md-1" style="text-align: center">1</td>
+                                                        <td class="col-md-1 text-center">{{game.price}} ฿</td>
+                                                        <td class="col-md-1 text-center">{{game.price}} ฿</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>   </td>
+                                                        <td>   </td>
+                                                        <td class="text-right">
+                                                            <p>
+                                                                <strong>Subtotal: </strong>
+                                                            </p>
+
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p>
+                                                                <strong>{{game.price}} ฿</strong>
+                                                            </p>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>   </td>
+                                                        <td>   </td>
+                                                        <td class="text-right">
+                                                            <h4><strong>Total: </strong></h4>
+                                                        </td>
+                                                        <td class="text-center text-danger">
+                                                            <h4><strong>{{game.price}}฿</strong></h4>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-success btn-lg btn-block">
+                                                Pay Now   <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button></td>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <br><br>
+
+
+                    </div>
+                    {% elif  credit  == 'credit'%}
+                    <div class="padding">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Credit Card</strong>
+                                        <small>enter your card details</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input class="form-control" id="name" type="text"
+                                                        placeholder="Enter your name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="ccnumber">Credit Card Number</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text"
+                                                            placeholder="0000 0000 0000 0000" autocomplete="email">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="mdi mdi-credit-card"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-4">
+                                                <label for="ccmonth">Month</label>
+                                                <select class="form-control" id="ccmonth">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                    <option>9</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="ccyear">Year</label>
+                                                <select class="form-control" id="ccyear">
+                                                    <option>2014</option>
+                                                    <option>2015</option>
+                                                    <option>2016</option>
+                                                    <option>2017</option>
+                                                    <option>2018</option>
+                                                    <option>2019</option>
+                                                    <option>2020</option>
+                                                    <option>2021</option>
+                                                    <option>2022</option>
+                                                    <option>2023</option>
+                                                    <option>2024</option>
+                                                    <option>2025</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="cvv">CVV/CVC</label>
+                                                    <input class="form-control" id="cvv" type="text" placeholder="123">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="btn btn-sm btn-success float-right" type="submit">
+                                            <i class="mdi mdi-gamepad-circle"></i> Pay Now</button>
+                                        <button class="btn btn-sm btn-danger" type="reset">
+                                            <i class="mdi mdi-lock-reset"></i> {{game.price}} ฿</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    {% endif %}
+
+
+
+
+
+
+
+
+                    <hr>
+
+
+
+
+
+
+                </div>
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+{% endblock content %}

@@ -23,11 +23,9 @@ urlpatterns = [
     path('login/', views.my_login, name='login'),
     path('logout/', views.my_logout, name='logout'),
     path('allgame/', views.allgame, name='allgame'),
-    # path('details/', views.details, name='details'),
     path('details/<int:game_id>/', views.details, name='details'),
     path('login/home', views.home_member, name='home_member'),
-    # path('login/home/details/', views.details_member, name='details_member'),
     path('mygame/', views.mygame, name='mygame'),
-
-    # path('home/', views.homemember, name='homemember'),
+    path('profile/', views.profile, name='profile'),
+    path('payment/<int:game_id>/', views.payment, name='payment'),
 ]

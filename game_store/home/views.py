@@ -1,3 +1,4 @@
+import profile
 from builtins import filter
 from contextlib import redirect_stderr
 from struct import error
@@ -12,6 +13,13 @@ from data.models import Game, Image
 
 # Create your views here.
 def home(request):
+    # if request.method == 'POST':
+    #     search = request.POST.get('search')
+    #     game_search = Game.objects.filter(name__icontains=search)
+    #     return render(request, 'index.html', context={
+    #         'games': ,
+    #     })
+
     game_action = Game.objects.filter(game_type_id=1)
     image_action = Image.objects.filter(game_id__game_type_id=1)
 
@@ -96,13 +104,36 @@ def allgame(request):
 
 def details(request, game_id):
     context = {}
-    game = Game.objects.filter(id=game_id)
-    image = Image.objects.filter(game_id_id=game_id)
+    game = Game.objects.get(pk=game_id)
+    image = Image.objects.get(game_id_id=game_id)
 
     context['game'] = game
     context['image'] = image
 
     return render(request, 'details.html', context=context)
+
+
+def payment(request, game_id):
+    context = {}
+    game = Game.objects.get(pk=game_id)
+    image = Image.objects.get(game_id_id=game_id)
+
+    if request.method == 'POST':
+        check = request.POST.get('cash')
+        check2 = request.POST.get('credit')
+        check3 = request.POST.get('airpay')
+
+        print(check)
+        if check == 'cash':
+            context['cash'] = "cash"
+        elif check2 == 'credit':
+            context['credit'] = "credit"
+        elif check3 == 'airpay':
+            context['airpay'] = "airpay"
+
+    context['game'] = game
+    context['image'] = image
+    return render(request, 'payment.html', context=context)
 
 
 def home_member(request):
@@ -123,3 +154,7 @@ def details_member(request):
 
 def mygame(request):
     return render(request, 'mygame.html')
+
+
+def profile(request):
+    return render(request, 'myprofile.html')
