@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from .models import Game_type, Game, User_games, Image
 
 # Register your models here.
@@ -36,3 +37,4 @@ class Imageadmin(admin.ModelAdmin):
 
 
 admin.site.register(Image, Imageadmin)
+admin.site.register(Permission)

@@ -35,7 +35,6 @@
             margin: 0 0.5em;
         }
     </style>
-
 </head>
 
 <body>
@@ -45,10 +44,20 @@
         <a class="navbar-brand" href="{% url 'home' %}">
             <img src="{% static '/img/icon.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
             GAME STORE
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated%}
+
+            <font color="pink">Welcome : </font>{{ request.user.username }}
             <div class="flexie">
+                {% if perms.data.change_game %}
+                <a type="button" class="btn btn-outline-success" href="{% url 'per_admin' %}" role="button">Edit
+                    Data</a>
+                {% else %}
+                <p></p>
                 <a type="button" class="btn btn-outline-success" href="{% url 'profile' %}" role="button">My Profile</a>
+                {% endif %}
+
                 <a type="button" class="btn btn-outline-danger" href="{% url 'logout' %}" role="button">Logout</a>
+
             </div>
             {% else %}
             <a type="button" class="btn btn-primary col-1" href="{% url 'login' %}" role="button">Login</a>

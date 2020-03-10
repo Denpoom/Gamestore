@@ -28,4 +28,7 @@ urlpatterns = [
     path('mygame/', views.mygame, name='mygame'),
     path('profile/', views.profile, name='profile'),
     path('payment/<int:game_id>/', views.payment, name='payment'),
+    path('admin/', views.per_admin, name='per_admin'),
+    path('game_user/', views.game_user, name='game_user'),
+    path('search/', views.search, name='search'),
 ]

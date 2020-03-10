@@ -5,6 +5,7 @@ from struct import error
 from urllib import request
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -13,12 +14,6 @@ from data.models import Game, Image
 
 # Create your views here.
 def home(request):
-    # if request.method == 'POST':
-    #     search = request.POST.get('search')
-    #     game_search = Game.objects.filter(name__icontains=search)
-    #     return render(request, 'index.html', context={
-    #         'games': ,
-    #     })
 
     game_action = Game.objects.filter(game_type_id=1)
     image_action = Image.objects.filter(game_id__game_type_id=1)
@@ -158,3 +153,16 @@ def mygame(request):
 
 def profile(request):
     return render(request, 'myprofile.html')
+
+
+def game_user(request):
+    return render(request, 'game.html')
+
+
+@permission_required('data.change_game')
+def per_admin(request):
+    return render(request, 'index.html')
+
+
+def search(request):
+    return render(request, 'search.html')
