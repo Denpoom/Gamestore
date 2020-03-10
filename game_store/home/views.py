@@ -4,8 +4,10 @@ from contextlib import redirect_stderr
 from struct import error
 from urllib import request
 
+from astroid import context
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -83,6 +85,7 @@ def my_logout(request):
     return redirect('login')
 
 
+@login_required
 def allgame(request):
     game_type = request.POST.get('type')
     game = Game.objects.all()
@@ -108,6 +111,7 @@ def details(request, game_id):
     return render(request, 'details.html', context=context)
 
 
+@login_required
 def payment(request, game_id):
     context = {}
     game = Game.objects.get(pk=game_id)
@@ -147,14 +151,17 @@ def details_member(request):
     return render(request, 'details.html')
 
 
+@login_required
 def mygame(request):
     return render(request, 'mygame.html')
 
 
+@login_required
 def profile(request):
     return render(request, 'myprofile.html')
 
 
+@login_required
 def game_user(request):
     return render(request, 'game.html')
 
@@ -165,4 +172,11 @@ def per_admin(request):
 
 
 def search(request):
-    return render(request, 'search.html')
+    search = request.POST.get('search', '')
+    game_search = Game.objects.filter(name__icontains=search)
+
+    image_search = Image.objects.all()
+
+    context = {'game_search': game_search, 'image_search': image_search}
+
+    return render(request, 'search.html', context=context)

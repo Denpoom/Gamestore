@@ -1,10 +1,103 @@
 {% extends 'bese.html' %}
 {% block content %}
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <br>
+    <!-- search -->
+    <div class="container">
+        <div class="row">
+            <div class="col-8 ">
+                <form action="{% url 'search' %}" method="POST" class="form-inline">
+                    {% csrf_token %}
+                    <div class="form-group mx-sm-2 mb-2">
+                        <input type="text" class="form-control" name="search" placeholder="Search...">
+                    </div>
+
+                </form>
 
 
+            </div>
+            <div class="col-4 text-right">
+                {% if user.is_authenticated %}
+                <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
+                    Game</a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-10  ">
+                    <!-- เริ่มทั้งแถว -->
+                    <h1 style="text-align: left; width:49%; display: inline-block;">Search game</h1>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'home' %}">back
+                        home...</a>
+
+                    <div class="row p-2 ml-3">
+                        <!-- แถว 1 อันที่ 1 -->
+                        {% for game in game_search %}
+                        {% for image in image_search %}
+                        {% if image.game_id_id == game.id %}
+                        <div class="col-sm-2 m-2">
+                            <div>
+                                <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
+                                    src="{{ image.image_url.url }}" alt="">
+                                <a class="ml-" style="color: #000000"
+                                    href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
+                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <!-- จบแถว -->
+                    <!-- เริ่มทั้งแถว -->
 
 
+                    <div class="row p-2 ml-3">
+                        <!-- แถว 1 อันที่ 1 -->
 
 
+                    </div>
+                </div>
+                <div class="col-2 ">
+                    <p>Filters</p>
+                    <hr>
+                    <form action="{% url 'allgame' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Action" name="type" onchange="this.form.submit()">
+                                Action</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Adventure" name="type" onchange="this.form.submit()">
+                                Adventure</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Sport" name="type" onchange="this.form.submit()">
+                                Sport</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Racing" name="type" onchange="this.form.submit()">
+                                Racing</label>
+                        </div>
+                    </form>
+                </div>
 
-{% endblock content %}
+            </div>
+
+        </div>
+</body>
+
+</html>
+
+{% endblock  %}

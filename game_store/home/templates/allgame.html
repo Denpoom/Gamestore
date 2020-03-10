@@ -15,30 +15,13 @@
     <div class="container">
         <div class="row">
             <div class="col-8 ">
-                <form class="form-inline">
+                <form action="{% url 'search' %}" method="POST" class="form-inline">
+                    {% csrf_token %}
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" name="search" placeholder="Search...">
                     </div>
 
                 </form>
-                <!-- <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-outline-secondary">Type Game</button>
-                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Adventure</a>
-                            <a class="dropdown-item" href="#">Sport</a>
-                            <a class="dropdown-item" href="#">Racing</a>
-
-                        </div>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-                </div> -->
-
             </div>
             <div class="col-4 text-right">
                 {% if user.is_authenticated %}
