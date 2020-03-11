@@ -61,7 +61,9 @@
                     </div>
                     <div class=" mb-2 my- mr-5">
                         <h4>{{game.name}}</h4>
-                      
+                    {% if error %}
+                        <small class="" style="color: red">{{ error }}</small>
+                    {% endif %}
                         <hr>
                     </div>
                 </div>

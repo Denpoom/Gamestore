@@ -13,6 +13,7 @@ from django.contrib.auth.models import Group, User
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from data.models import Game, Image, User_games
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -153,12 +154,12 @@ def payment(request, game_id):
 def buy_payment(request, game_id):
 
     user = request.user.id
-    gameuser = User_games.objects.all()
-    check = 0
-    for i in gameuser:
-        if i.game_id_id == game_id and i.user_id_id == user:
-            check = 1
-    if check == 1:
+    try:
+        gameuser = User_games.objects.get(game_id_id=game_id, user_id_id=user)
+    except ObjectDoesNotExist:
+        gameuser = None
+
+    if gameuser:
 
         return redirect('details', game_id)
 
@@ -168,7 +169,7 @@ def buy_payment(request, game_id):
                           serial='%32x' % random.getrandbits(16 * 8))
         post.save()
 
-        return redirect('home')
+        return redirect('mygame')
 
 
 @login_required
