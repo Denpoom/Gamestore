@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'game_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'project',
+        'NAME': 'projectgame',
         'USER': 'denpoom',
         'PASSWORD': '6007',
         'HOST': 'localhost',

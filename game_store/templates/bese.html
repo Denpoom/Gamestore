@@ -46,11 +46,13 @@
             GAME STORE
             {% if user.is_authenticated%}
 
-            <font color="pink">Welcome : </font>{{ request.user.first_name }}
+            <font color="pink">Welcome : </font>{{ request.user.first_name }} {{ request.user.last_name }}
             <div class="flexie">
                 {% if perms.data.change_game %}
-                <a type="button" class="btn btn-outline-success" href="{% url 'per_admin' %}" role="button">Edit
-                    Data</a>
+                <a type="button" class="btn btn-info" href="{% url 'add_game' %}" role="button">ADD GAME</a>
+                <a type="button" class="btn btn-info" href="{% url 'admin' %}" role="button">EDIT/DELETE GAME</a>
+       
+                
                 {% else %}
                 <p></p>
                 <a type="button" class="btn btn-outline-success" href="{% url 'profile' %}" role="button">My Profile</a>

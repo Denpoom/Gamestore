@@ -15,12 +15,14 @@
     <div class="container">
         <div class="row">
             <div class="col-8 ">
-                <form class="form-inline">
+                <form action="#" method="POST" class="form-inline">
+                    {% csrf_token %}
                     <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" name="search" placeholder="Search...">
                     </div>
 
                 </form>
+                
                 <!-- <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <button type="button" class="btn btn-outline-secondary">Type Game</button>
@@ -42,8 +44,11 @@
             </div>
             <div class="col-4 text-right">
                 {% if user.is_authenticated %}
-                <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
+                {% if perms.data.change_game %}
+                {% else %}
+                    <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'home' %}" role="button">Buy
                     Game</a>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -53,29 +58,31 @@
                 <div class="col-10  ">
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">My Game</h1>
-                    <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'home' %}">back
-                        home...</a>
+                    {% comment %} <a style="text-align: right; width:50%;  display: inline-block;"
+                        href="{% url 'home' %}">back
+                        home...</a> {% endcomment %}
 
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->
-                        {% comment %} {% for game in games %}
+                        {% for game in games %}
                         {% for image in images %}
-                        {% if image.game_id_id == game.id %}
-                        {% if game.game_type_id.type_name == game_type %}
+                        {% if image.game_id_id == game.game_id_id %}
 
                         <div class="col-sm-2 m-2">
                             <div>
                                 <img class="card shadow p-2 mb-3 bg-white rounded" style="width: 9rem; height: 13rem;"
                                     src="{{ image.image_url.url }}" alt="">
-                                <a class="ml-" style="color: #000000"
-                                    href="{% url 'details' game.id %}"><b>{{ game.name }}</b></a> <br>
-                                <small class="" style="color: #afafaf">{{ game.developer }}</small>
+                                <p class="ml-" style="color: #000000"><b>{{ game.game_id.name }}</b></a> <br>
+                                <small class="" style="color: #afafaf">{{ game.game_id.developer }}</small>
                             </div>
                         </div>
                         {% endif %}
-                        {% endif %}
+
                         {% endfor %}
-                        {% endfor %} {% endcomment %}
+                        {% endfor %}
+                        {% for i in game %}
+                        game name : {{ i.game_id.name }}
+                        {% endfor %}
                     </div>
                     <!-- จบแถว -->
                     <!-- เริ่มทั้งแถว -->

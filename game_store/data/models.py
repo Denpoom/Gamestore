@@ -22,8 +22,7 @@ class Game(models.Model):
 
 
 class User_games(models.Model):
-    user_game_id = models.CharField(max_length=255, primary_key=True)
-    purchased_date = models.DateTimeField()
+    purchased_date = models.DateField(auto_now=True)
     serial = models.CharField(max_length=255)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     game_id = models.ForeignKey(Game, on_delete=models.PROTECT)

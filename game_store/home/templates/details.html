@@ -14,10 +14,10 @@
     <div class="container">
         <div class="row">
             <div class="col-8 ">
-                <form  class="form-inline">
+                <form class="form-inline">
                     <div class="form-group mx-sm-2 mb-2">
                         <input type="text" class="form-control" placeholder="Search...">
-                        
+
                     </div>
 
                 </form>
@@ -26,9 +26,11 @@
 
             <div class="col-4 text-right">
                 {% if user.is_authenticated %}
+                {% if perms.data.change_game %}
+                {% else %}
                 <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
                     Game</a>
-
+                {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -42,16 +44,16 @@
         </div><br>
         <!-- หมดตรงกลางอันเดียว -->
         <!--  3 of 3 -->
-        
+
 
         <div class="container">
             <div class="row text">
-                
+
                 <div class="col ">
                     <img class="card shadow p-2 mb-3 ml-4 bg-white rounded " style="width: 10rem; height: 14rem;"
                         src="{{image.image_url.url}}" alt="">
                 </div>
-                
+
                 <div class="col-6 ">
                     <div class="p-2 mb-3 my-5">
                     </div>
@@ -69,10 +71,21 @@
                         <p class="mb-2">{{game.price}} BAHT</p>
                     </blockquote>
                     {% if user.is_authenticated %}
+                    {% if perms.data.change_game %}
                     <blockquote class="blockquote text-right">
-                        <a type="button" class="btn btn-outline-dark col-5 ml-3" href="{% url 'payment' game.id %}"
+                        <a type="button" class="btn btn btn-primary col-5 ml-3" href="{% url 'edit_game' game.id %}"
+                            role="button">Edit/Delete </a>
+                            <a type="button" class="btn btn btn-primary col-5 ml-3" href="{% url 'edit_image' game.id %}"
+                            role="button">Edit Image</a>
+
+
+                    </blockquote>
+                    {% else %}
+                    <blockquote class="blockquote text-right">
+                        <a type="button" class="btn btn-outline-success col-5 ml-3" href="{% url 'payment' game.id %}"
                             role="button">BUY NOW</a>
                     </blockquote>
+                    {% endif %}
                     {% endif %}
                 </div>
             </div><br>
@@ -106,7 +119,7 @@
                 <div class="">{{game.description}}
                 </div>
             </div><br><br><br>
-          
+
 
 
 </body>

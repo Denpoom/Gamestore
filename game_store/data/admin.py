@@ -23,10 +23,7 @@ admin.site.register(Game, Gameadmin)
 
 
 class User_gameadmin(admin.ModelAdmin):
-    list_display = [
-        'user_game_id', 'user_game_id', 'user_id', 'game_id', 'purchased_date',
-        'serial'
-    ]
+    list_display = ['user_id', 'game_id', 'purchased_date', 'serial']
 
 
 admin.site.register(User_games, User_gameadmin)

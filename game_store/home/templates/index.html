@@ -31,9 +31,11 @@
 
             <div class="col-4 text-right">
                 {% if user.is_authenticated %}
-
-                <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
+                {% if perms.data.change_game %}
+                {% else %}
+                    <a type="button" class="btn btn-outline-warning col-5 ml-5" href="{% url 'mygame' %}" role="button">My
                     Game</a>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -42,6 +44,7 @@
 
             <div class="row">
                 <div class="col-10  ">
+                
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">Action</h1>
                     <a style="text-align: right; width:50%;  display: inline-block;" href="#">Seemore...</a>
