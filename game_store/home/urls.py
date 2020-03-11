@@ -20,9 +20,7 @@ from . import views
 urlpatterns = [
     # User
     path('', views.home, name='home'),
-    path('login/', views.my_login, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('logout/', views.my_logout, name='logout'),
     path('allgame/', views.allgame, name='allgame'),
     path('search/', views.search, name='search'),
     # Member
@@ -36,7 +34,7 @@ urlpatterns = [
     path('mygame/', views.mygame, name='mygame'),
     path('edit/', views.edit, name='edit'),
     # Admin
-    path('Admin/', views.admin, name='admin'),
+    path('allgameadmin/', views.admin, name='admin'),
     path('admin/data/game/add/', views.add_game, name='add_game'),
     path('admin/data/game/<int:game_id>/change/',
          views.edit_game,

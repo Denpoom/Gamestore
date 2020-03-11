@@ -42,11 +42,11 @@
                     <h1 style="text-align: left; width:49%; display: inline-block;">All {{ game_type }}</h1>
                     
                     {% if perms.data.change_game %}
-                     <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'admin' %}">back
+                     <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'admin' %}">Back
                         allgame</a>
                         {% else %}
-                    <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'home' %}">back
-                        home...</a>
+                    <a style="text-align: right; width:50%;  display: inline-block;" href="{% url 'home' %}">Back
+                        home</a>
                         {% endif %}
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->

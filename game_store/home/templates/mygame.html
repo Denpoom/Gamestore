@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col-8 ">
-                <form action="#" method="POST" class="form-inline">
+                <form action="{% url 'mygame' %}" method="POST" class="form-inline">
                     {% csrf_token %}
                     <div class="form-group mx-sm-2 mb-2">
                         <input type="text" class="form-control" name="search" placeholder="Search...">
@@ -58,9 +58,9 @@
                 <div class="col-10  ">
                     <!-- เริ่มทั้งแถว -->
                     <h1 style="text-align: left; width:49%; display: inline-block;">My Game</h1>
-                    {% comment %} <a style="text-align: right; width:50%;  display: inline-block;"
+                     <a style="text-align: right; width:50%;  display: inline-block;"
                         href="{% url 'home' %}">back
-                        home...</a> {% endcomment %}
+                        home...</a> 
 
                     <div class="row p-2 ml-3">
                         <!-- แถว 1 อันที่ 1 -->

@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group, User
 from django.shortcuts import redirect, render
-
+from django.db.models import Q
 from data.models import Game, Image, User_games
 
 
@@ -29,6 +29,13 @@ def home(request):
     # Game Racing
     game_rac = Game.objects.filter(game_type_id=4)
     image_rac = Image.objects.filter(game_id__game_type_id=4)
+
+    # if request.method == 'POST':
+    #     action = request.POST.get('action')
+
+    #     print(action)
+    #     if action == 'action':
+    #         context['action'] = "action"
 
     return render(request,
                   'index.html',
@@ -69,11 +76,19 @@ def my_login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('home')
+            next_url = request.POST.get('next_url')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('home')
         else:
             context['username'] = username
             context['password'] = password
             context['error'] = 'Wrong username or password!'
+    #next  url
+    next_url = request.GET.get('next_url')
+    if next_url:
+        context['next_url'] = next_url
 
     return render(request, 'login.html', context=context)
 
@@ -136,6 +151,7 @@ def payment(request, game_id):
 
 
 def buy_payment(request, game_id):
+
     user = request.user.id
     gameuser = User_games.objects.all()
     check = 0
@@ -143,7 +159,9 @@ def buy_payment(request, game_id):
         if i.game_id_id == game_id and i.user_id_id == user:
             check = 1
     if check == 1:
+
         return redirect('details', game_id)
+
     else:
         post = User_games(user_id_id=user,
                           game_id_id=game_id,
@@ -156,6 +174,16 @@ def buy_payment(request, game_id):
 @login_required
 @permission_required('data.view_user_games')
 def mygame(request):
+    if request.method == 'POST':
+        search = request.POST.get('search')
+        user = request.user.id
+        game_search = User_games.objects.filter(
+            user_id=user, game_id_id__name__icontains=search)
+        image_search = Image.objects.all()
+
+        context = {'games': game_search, 'images': image_search}
+        return render(request, 'mygame.html', context=context)
+
     user = request.user.id
     mygame = User_games.objects.filter(user_id=user)
     images = Image.objects.all()
@@ -221,13 +249,23 @@ def edit_profile(request):
 
 @login_required
 def game_user(request):
+    if request.method == 'POST':
+        type_game = request.POST.get('type')
+        user = request.user.id
+        game_search = User_games.objects.filter(
+            user_id=user, game_id_id__game_type_id_id__type_name=type_game)
+        image_search = Image.objects.all()
+        context = {'games': game_search, 'images': image_search}
+        return render(request, 'mygame.html', context=context)
+
     return render(request, 'game.html')
 
 
 # ค้นหาเกมหน้าhome
 def search(request):
     search = request.POST.get('search', '')
-    game_search = Game.objects.filter(name__icontains=search)
+    game_search = Game.objects.filter(
+        Q(name__icontains=search) | Q(developer__icontains=search))
 
     image_search = Image.objects.all()
     context = {'game_search': game_search, 'image_search': image_search}
@@ -237,11 +275,15 @@ def search(request):
 # ค้นหาเกมหน้าคลังเกม
 def search_mygame(request):
     search = request.POST.get('search', '')
-    game_search = Game.objects.filter(name__icontains=search)
+    game_search = Game.objects.filter(
+        Q(name__icontains=search) | Q(developer__icontains=search))
 
     image_search = Image.objects.all()
 
-    context = {'game_search': game_search, 'image_search': image_search}
+    context = {
+        'game_search': game_search,
+        'image_search': image_search,
+    }
 
     return render(request, 'mysearch.html', context=context)
 
